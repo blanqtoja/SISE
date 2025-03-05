@@ -6,7 +6,7 @@ class BoardNode:
     board = [] # plansza
     parent = None # rodzic w drzewie
     direction = "" # kierunek w jakim przesunieto pusty punkt
-
+    level = 0 # poziom w drzewie
 
     # konstruktor 
     # parametry:
@@ -17,6 +17,16 @@ class BoardNode:
         self.board = board
         self.parent = parent
         self.direction = direction
+        if(parent != None):
+            self.level = parent.getLevel() + 1
+        else:
+            self.level = 0
+
+    # funkcja zwracająca poziom w drzewie
+    # zwraca:
+    #   int, poziom
+    def getLevel(self):
+        return self.level
 
     # funckja dodająca nowy węzeł do drzewa
     # parametry:
@@ -31,8 +41,9 @@ class BoardNode:
             newBoard.append(row.copy())
         
         # tworzymy nowy węzeł
-        fs.switchField(newBoard, newDirection) # przesuwamy puste pole
-
+        #todo: moze to zły pomysl
+        if(fs.switchField(newBoard, newDirection) == False): # przesuwamy puste pole
+            return None # jesli nie udało się przesunąć pola, to zwracamy None
         return BoardNode(newBoard, self, newDirection)
         
     

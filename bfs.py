@@ -1,6 +1,6 @@
 from collections import deque
 
-def bfs(startNode):
+def bfs(startNode, dirPermutation, maxLevel):
     #kolejka fif do przechowywania wezlow po szerokosci
     queue = deque()
 
@@ -18,8 +18,23 @@ def bfs(startNode):
         if currentNode.isSolution():
             return currentNode.getStringPath()
         
+        #sprawdzamy czy nie przekroczylismy maksymalnej glebokosci
+        print(currentNode.getLevel())
+        if(currentNode.getLevel() == maxLevel):
+            return None
+        
         #dla kazdego ruchu tworzymy nowy wezel
-        for direction in ["L", "R", "U", "D"]:
+        for direction in dirPermutation:
+            # nie wracamy do poprzedniego stanu
+            if(currentNode.getDirection() == "L" and direction == "R"):
+                continue
+            if(currentNode.getDirection() == "R" and direction == "L"):
+                continue
+            if(currentNode.getDirection() == "U" and direction == "D"):
+                continue
+            if(currentNode.getDirection() == "D" and direction == "U"):
+                continue
+
             newNode = currentNode.addNode(direction)
             if(tuple(map(tuple, newNode.getBoard())) not in visited): # jesli plansza nie byla odwiedzona to dodajemy ja do kolejki
                 queue.append(newNode)

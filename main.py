@@ -10,6 +10,7 @@
 # wczytujemy dane z pliku
 from BoardNode import BoardNode
 from bfs import bfs
+import convertMatrix
 
 
 file = open("data.txt", "r")
@@ -28,8 +29,12 @@ print(board)
 # tworzymy węzeł początkowy
 startNode = BoardNode(board, None, "")
 
+# zmienne pomocnicze
+dirPermutation = ["L", "R", "U", "D"] # permutacja kierunków
+maxLevel = 20 # maksymalna glebokosc drzewa
+
 # uruchamiamy algorytm
-path = bfs(startNode)
+path = bfs(startNode, noLevels, maxLevel)
 
 # wypisujemy wynik
 if path is None:
