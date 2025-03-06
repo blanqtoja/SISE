@@ -1,3 +1,4 @@
+import convertMatrix
 import fieldSwitch as fs
 
 class BoardNode:
@@ -36,13 +37,15 @@ class BoardNode:
 
     def addNode(self, newDirection):
         # tworzymy nową planszę na podstawie aktualnej
-        newBoard = []
-        for row in self.board:
-            newBoard.append(row.copy())
-        
+        # newBoard = []
+        # for row in self.board:
+        #     newBoard.append(row.copy())
+        newBoard = self.board.copy()
+
         # tworzymy nowy węzeł
-        #todo: moze to zły pomysl
-        if(fs.switchField(newBoard, newDirection) == False): # przesuwamy puste pole
+
+#todo: trzeba chyba dodac rozwiary macierzy
+        if(fs.switchField(convertMatrix.to2D(newBoard), newDirection) == False): # przesuwamy puste pole
             return None # jesli nie udało się przesunąć pola, to zwracamy None
         return BoardNode(newBoard, self, newDirection)
         
