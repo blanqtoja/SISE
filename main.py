@@ -27,14 +27,14 @@ for i in range(1, w+1): #liczby mamy podane dopiero w drugim wierszu
 print(board)
 # 
 # tworzymy węzeł początkowy
-startNode = BoardNode(board, None, "")
+startNode = BoardNode(convertMatrix.to1D(board), None, "")
 
 # zmienne pomocnicze
 dirPermutation = ["L", "R", "U", "D"] # permutacja kierunków
 maxLevel = 20 # maksymalna glebokosc drzewa
 
 # uruchamiamy algorytm
-path = bfs(startNode, noLevels, maxLevel)
+path = bfs(startNode, k, dirPermutation, maxLevel)
 
 # wypisujemy wynik
 if path is None:

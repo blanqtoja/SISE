@@ -35,7 +35,7 @@ class BoardNode:
     # zwraca:  
     #   BoardNode, nowy węzeł
 
-    def addNode(self, newDirection):
+    def addNode(self, newDirection, col):
         # tworzymy nową planszę na podstawie aktualnej
         # newBoard = []
         # for row in self.board:
@@ -44,9 +44,10 @@ class BoardNode:
 
         # tworzymy nowy węzeł
 
-#todo: trzeba chyba dodac rozwiary macierzy
-        if(fs.switchField(convertMatrix.to2D(newBoard), newDirection) == False): # przesuwamy puste pole
-            return None # jesli nie udało się przesunąć pola, to zwracamy None
+        # if(fs.switchField(convertMatrix.to2D(newBoard, col), newDirection) == False): # przesuwamy puste pole
+        #     return None # jesli nie udało się przesunąć pola, to zwracamy None
+
+        fs.switchField(convertMatrix.to2D(newBoard, col), newDirection)
         return BoardNode(newBoard, self, newDirection)
         
     
@@ -73,7 +74,8 @@ class BoardNode:
     #   int, liczba wierszy 
     #   int, liczba kolumn
     def getSize(self):
-        return len(self.board), len(self.board[0])
+        return len(self.board)
+        # return len(self.board), len(self.board[0])
     
     # funkcja sprawdzająca czy plansza jest rozwiązaniem
     # zwraca:
@@ -83,18 +85,26 @@ class BoardNode:
         #pobieram rozmiar planszy
         # print("sprawdzam rozwiazanie")
 
-        w, k = self.getSize()
+        # w, k = self.getSize()
+
+        # #przeszukujemy planszę, przerywamy jesli spotkamy element, ktory nie jest na swoim miejscu
+        # for i in range(w): #wiersze - mnozymy przez k (ilosc elementow w wierszu)
+        #     for j in range(k): 
+        #         if(i == w-1 and j == k-1): #ostatni element to 0
+        #             break
+        #         if(self.board[i][j] != i*k + j +1):
+        #             return False
+                
+        k = self.getSize()
+
+        if(self.board[k-1] != 0): #ostatni element to 0, wiec jesli nie jest to nie jest to rozwiazanie
+            return False
 
         #przeszukujemy planszę, przerywamy jesli spotkamy element, ktory nie jest na swoim miejscu
-        for i in range(w): #wiersze - mnozymy przez k (ilosc elementow w wierszu)
-            for j in range(k): 
-                if(i == w-1 and j == k-1): #ostatni element to 0
-                    break
-                if(self.board[i][j] != i*k + j +1):
-                    return False
-                
-
-        
+        for i in range(k-2): #wiersze - mnozymy przez k (ilosc elementow w wierszu)
+            if(self.board[i] != i+1):
+                return False
+            
         return True
     
     # funkcja zwracajaca ścieżkę do rozwiązania

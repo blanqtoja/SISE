@@ -1,43 +1,38 @@
+def findZeroField(board):
+    for i in range(len(board)):
+        for j in range(len(board[0])):
+            print(f"Sprawdzam [{i}, {j}] = {board[i][j]}")
+
+            if board[i][j] == 0:
+                return i, j
+    return -1, -1
+
+
 
 # funkcja przesuwająca puste pole w danej planszy
+# 
 # params: 
-#   board - lista 2D 
+#   board - lista 2D, trzeba zapewnic, ze pole 0 da sie przesunac w podanym kierunku
 #   direction - string, "L", "R", "U", "D"
 # returns: true jeśli udało się przesunąć pole, false w przeciwnym wypadku
 def switchField(board, direction):
-    w = len(board) # liczba wierszy
-    k = len(board[0]) # liczba kolumn
-     
-    # szukamy pustego pola
-    x, y = 0, 0 # współrzędne pustego pola
+    
+    row, col = len(board), len(board[0])
 
-    for i in range (0, w):
-        for j in range(0, k):
-            if board[i][j] == 0:
-                x, y = i, j
-                break
+    x, y = findZeroField(board) # znajdujemy wspolrzedne pustego pola
 
     # majac wspolrzedne pustego pola, mozemy go przesunac wedlug kierunku
     if(direction == "L"):
-        if y == 0: #pole nie moze sie przesunac w relo, jesli jest juz na skraju
-            return False
-        else:
+        if(y > 0):
             board[x][y], board[x][y-1] = board[x][y-1], board[x][y] # zamieniamy puste pole z polem obok
     elif(direction == "R"):
-        if(y == k-1):
-            return False
-        else:
+        if(y < col-1):
             board[x][y], board[x][y+1] = board[x][y+1], board[x][y]
     elif(direction == "U"):
-        if(x == 0):
-            return False
-        else:
+        if(x >0):
             board[x][y], board[x-1][y] = board[x-1][y], board[x][y]
     elif(direction == "D"):
-        if(x == w-1):
-            return False
-        else:
+        if(x < row-1):
             board[x][y], board[x+1][y] = board[x+1][y], board[x][y]
     
-    return True
-
+##############sprawdzić czemu nie zamienia pustego pola i liczby
