@@ -43,12 +43,12 @@ def bfs(startNode, k, dirPermutation, maxLevel):
             
             # jesli puste pole jest na skraju to nie mozemy go przesunac w tym kierunku
             
-            row, col = fs.findZeroField(convertMatrix.to2D(currentNode.getBoard(), k)) 
+            row, col = fs.findZeroField(currentNode.getBoard()) 
             
             #sprawdzamy czy puste pole jest na skraju i czy chcemy je przesunac w tym kierunku
             if(row == 0 and direction == "U"):
                 continue
-            if(row == (len(currentNode.getBoard())/k)-1 and direction == "D"):
+            if(row == (len(currentNode.getBoard())-1 ) and direction == "D"):
                 continue
             if(col == 0 and direction == "L"):
                 continue
