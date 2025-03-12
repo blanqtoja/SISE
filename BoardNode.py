@@ -83,9 +83,6 @@ class BoardNode:
     #   bool, True jeśli plansza jest rozwiązaniem, False w przeciwnym wypadku
 
     def isSolution(self):
-        #pobieram rozmiar planszy
-        # print("sprawdzam rozwiazanie")
-
         w, k = self.getSize()
 
         if(self.board[w-1][k-1] != 0): #ostatni element to 0, wiec jesli nie jest to nie jest to rozwiazanie

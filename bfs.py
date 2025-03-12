@@ -14,7 +14,7 @@ def bfs(startNode, k, dirPermutation, maxLevel):
 
     while(queue): #dopoki w kolejce sa wezly
         currentNode = queue.popleft() #pobieramy wezel z kolejki
-        visited.add(tuple(currentNode.getBoard())) #dodajemy plansze jako krotkę do zbioru odwiedzonych
+        visited.add(tuple(map(tuple, currentNode.getBoard()))) #dodajemy plansze jako krotkę do zbioru odwiedzonych
         #krotka, bo lista nie jest hashowalna, a krotka jest
 
         #sprawdzamyczy to jest rozwiazanie
@@ -56,11 +56,9 @@ def bfs(startNode, k, dirPermutation, maxLevel):
                 continue
     
             newNode = currentNode.addNode(direction, k)
-            if(tuple(newNode.getBoard()) not in visited): # jesli plansza nie byla odwiedzona to dodajemy ja do kolejki
+            if(tuple(map(tuple, newNode.getBoard())) not in visited): # jesli plansza nie byla odwiedzona to dodajemy ja do kolejki
                 queue.append(newNode)
                 if newNode.isSolution():
                     return newNode.getStringPath()
-                # print(newNode.getBoard())
-                #czekaj na input
-                # input()
+
     return None # nie znaleziono rozwiazania

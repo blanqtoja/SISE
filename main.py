@@ -27,7 +27,7 @@ for i in range(1, w+1): #liczby mamy podane dopiero w drugim wierszu
 print(board)
 # 
 # tworzymy węzeł początkowy
-startNode = BoardNode(convertMatrix.to1D(board), None, "")
+startNode = BoardNode(board, None, "")
 
 # zmienne pomocnicze
 dirPermutation = ["L", "R", "U", "D"] # permutacja kierunków

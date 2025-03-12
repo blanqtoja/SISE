@@ -1,8 +1,6 @@
 def findZeroField(board):
     for i in range(len(board)):
         for j in range(len(board[0])):
-            print(f"Sprawdzam [{i}, {j}] = {board[i][j]}")
-
             if board[i][j] == 0:
                 return i, j
     return -1, -1
@@ -35,4 +33,3 @@ def switchField(board, direction):
         if(x < row-1):
             board[x][y], board[x+1][y] = board[x+1][y], board[x][y]
     
-##############sprawdzić czemu nie zamienia pustego pola i liczby
