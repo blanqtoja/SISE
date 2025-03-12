@@ -1,27 +1,25 @@
-from collections import deque
 from BoardNode import BoardNode
 import fieldSwitch as fs
 import convertMatrix
 
-def bfs(startNode, k, dirPermutation, maxLevel, stats):
-    
+def dfs(startNode, k, dirPermutation, maxLevel, stats):
+
     stats.setMaxLevel(0)
 
-    #kolejka fifo do przechowywania wezlow po szerokosci
-    queue = deque()
+    #kolejka fif do przechowywania wezlow po szerokosci
+    stack = []
 
-    queue.append(startNode) #dodajemy wezel startowy do kolejki
+    stack.append(startNode) #dodajemy wezel startowy do kolejki
 
     #set do przechowywania odwiedzonych plansz (nie wezlow, bo one moga sie różnić kierunkiem)
     visited = set()
 
-    while(queue): #dopoki w kolejce sa wezly
-        currentNode = queue.popleft() #pobieramy wezel z kolejki
+    while(stack): #dopoki w kolejce sa wezly
+        currentNode = stack.pop() #pobieramy wezel z kolejki
         visited.add(tuple(map(tuple, currentNode.getBoard()))) #dodajemy plansze jako krotkę do zbioru odwiedzonych
         #krotka, bo lista nie jest hashowalna, a krotka jest
 
-        #sprawdzamy czy nie przekroczylismy maksymalnej glebokosci
-        # print(currentNode.getLevel())
+        # przypisujemy poziom do statystyk
         if(currentNode.getLevel() > stats.getMaxLevel()):
             stats.setMaxLevel(currentNode.getLevel())
 
@@ -32,11 +30,9 @@ def bfs(startNode, k, dirPermutation, maxLevel, stats):
             stats.setProcessed(len(visited))
             return currentNode.getStringPath()
         
-
+        #sprawdzamy czy nie przekroczylismy maksymalnej glebokosci
         if(currentNode.getLevel() == maxLevel):
-            stats.setVisited(len(visited))
-            stats.setProcessed(len(visited))
-            return None
+            continue
         
         #dla kazdego ruchu tworzymy nowy wezel
         for direction in dirPermutation:
@@ -69,7 +65,7 @@ def bfs(startNode, k, dirPermutation, maxLevel, stats):
     
             newNode = currentNode.addNode(direction, k)
             if(tuple(map(tuple, newNode.getBoard())) not in visited): # jesli plansza nie byla odwiedzona to dodajemy ja do kolejki
-                queue.append(newNode)
+                stack.append(newNode)
                 if newNode.isSolution():
                     stats.setVisited(len(visited))
                     stats.setProcessed(len(visited))
@@ -77,5 +73,4 @@ def bfs(startNode, k, dirPermutation, maxLevel, stats):
 
     stats.setVisited(len(visited))
     stats.setProcessed(len(visited))
-
     return None # nie znaleziono rozwiazania
