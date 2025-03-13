@@ -91,10 +91,11 @@ class BoardNode:
         #przeszukujemy planszę, przerywamy jesli spotkamy element, ktory nie jest na swoim miejscu
         for i in range(w-1): #wiersze - mnozymy przez k (ilosc elementow w wierszu)
             for j in range(k-1): 
-                
+                if(i == w-1 and j == k-1):
+                    break
                 if(self.board[i][j] != i*k + j +1):
                     return False
-                
+        
         # k = self.getSize()
 
         # if(self.board[k-1] != 0): #ostatni element to 0, wiec jesli nie jest to nie jest to rozwiazanie

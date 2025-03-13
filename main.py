@@ -8,6 +8,7 @@
 # zaczynamy od wczytania danych z pliku
 
 # wczytujemy dane z pliku
+from hamming import aStar, hamming, manhattan
 from stats import stat
 from BoardNode import BoardNode
 from bfs import bfs
@@ -137,9 +138,77 @@ elif (strategy == "astr"): # strategia A*
     print("A*")
     if(strategyParam == "hamm"):
         print("Hamming")
+
+        hammStats = stat()
+
+        # uruchamiamy algorytm
+        start = time.time()
+
+        dirPermutation = ["U", "D", "L", "R"]
+        maxLevel = 200
+        path = aStar(startNode, k, dirPermutation, maxLevel, hammStats, hamming)
+
+        end = time.time()
+
+        hammStats = stat()
+
+        hammStats.setTime(end-start)
+        hammStats.setPath(path)
+        hammStats.setLenFound(len(path))
+
+
+        # wypisujemy wynik
+        if path is None:
+            print("Brak rozwiązania")
+        else:
+            print(path)
+
+        print("A* Hamming statistics:\n")
+        print(hammStats)
+
+
+        # zapisujemy wyniki do pliku
+        fileStats = open(statsFile, "w")
+        fileStats.write("A* Hamming statistics:\n")
+        fileStats.write(str(hammStats))
+        fileStats.close()
+        
     elif strategyParam=="manh":
         print("Manhattan")
 
+        manhStats = stat()
+
+        # uruchamiamy algorytm
+        start = time.time()
+
+        dirPermutation = ["U", "D", "L", "R"]
+        maxLevel = 200
+        path = aStar(startNode, k, dirPermutation, maxLevel, manhStats, manhattan)
+
+        end = time.time()
+
+        manhStats = stat()
+
+        manhStats.setTime(end-start)
+        manhStats.setPath(path)
+        manhStats.setLenFound(len(path))
+
+
+        # wypisujemy wynik
+        if path is None:
+            print("Brak rozwiązania")
+        else:
+            print(path)
+
+        print("A* Hamming statistics:\n")
+        print(manhStats)
+
+
+        # zapisujemy wyniki do pliku
+        fileStats = open(statsFile, "w")
+        fileStats.write("A* Hamming statistics:\n")
+        fileStats.write(str(manhStats))
+        fileStats.close()
 else:
     print("Nieznana strategia")
 
