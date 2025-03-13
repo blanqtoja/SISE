@@ -133,8 +133,13 @@ if(strategy == "bfs" or strategy == "dfs"):
         fileStats.close()
 
 
-else: # strategia A*
+elif (strategy == "astr"): # strategia A*
     print("A*")
+    if(strategyParam == "hamm"):
+        print("Hamming")
+    elif strategyParam=="manh":
+        print("Manhattan")
 
-
+else:
+    print("Nieznana strategia")
 
