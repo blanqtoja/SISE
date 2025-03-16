@@ -67,7 +67,7 @@ startNode = BoardNode(board, None, "")
 # strategia BFS
 if(strategy == "bfs" or strategy == "dfs"):
     # wspolne zmienne dla obu strategii
-    maxLevel = 30 # maksymalna glebokosc drzewa
+    maxLevel = 20 # maksymalna glebokosc drzewa
     dirPermutation = list(strategyParam) # permutacja kierunków
 
     #podzial na strategie
@@ -80,15 +80,18 @@ if(strategy == "bfs" or strategy == "dfs"):
 
         # czas zakonczenia bfs
         end = time.time()
-        bfsStats.setTime(end-start)
+        bfsStats.setTime((end-start)*1000)
         bfsStats.setPath(path)
-        bfsStats.setLenFound(len(path))
 
         # wypisujemy wynik
         if path is None:
             print("Brak rozwiązania")
+            bfsStats.setLenFound("-1")
+
         else:
             print(path)
+            bfsStats.setLenFound(len(path))
+
 
         print("BFS statistics:\n")
         print(bfsStats)
@@ -96,7 +99,7 @@ if(strategy == "bfs" or strategy == "dfs"):
         
         # zapisujemy wyniki do pliku
         fileStats = open(statsFile, "w")
-        fileStats.write("BFS statistics:\n")
+        # fileStats.write("BFS statistics:\n")
         fileStats.write(str(bfsStats))
         fileStats.close()
 
@@ -112,24 +115,26 @@ if(strategy == "bfs" or strategy == "dfs"):
 
         dfsStats = stat()
 
-        dfsStats.setTime(end-start)
+        dfsStats.setTime((end-start)*1000)
         dfsStats.setPath(path)
-        dfsStats.setLenFound(len(path))
 
 
         # wypisujemy wynik
         if path is None:
             print("Brak rozwiązania")
+            dfsStats.setLenFound("-1")
+
         else:
             print(path)
+            dfsStats.setLenFound(len(path))
 
-        print("DFS statistics:\n")
+        # print("DFS statistics:\n")
         print(dfsStats)
 
 
         # zapisujemy wyniki do pliku
         fileStats = open(statsFile, "w")
-        fileStats.write("DFS statistics:\n")
+        # fileStats.write("DFS statistics:\n")
         fileStats.write(str(dfsStats))
         fileStats.close()
 
@@ -152,16 +157,18 @@ elif (strategy == "astr"): # strategia A*
 
         hammStats = stat()
 
-        hammStats.setTime(end-start)
+        hammStats.setTime((end-start)*1000)
         hammStats.setPath(path)
-        hammStats.setLenFound(len(path))
 
 
         # wypisujemy wynik
         if path is None:
             print("Brak rozwiązania")
+            hammStats.setLenFound("-1")
         else:
             print(path)
+            hammStats.setLenFound(len(path))
+
 
         print("A* Hamming statistics:\n")
         print(hammStats)
@@ -169,7 +176,7 @@ elif (strategy == "astr"): # strategia A*
 
         # zapisujemy wyniki do pliku
         fileStats = open(statsFile, "w")
-        fileStats.write("A* Hamming statistics:\n")
+        # fileStats.write("A* Hamming statistics:\n")
         fileStats.write(str(hammStats))
         fileStats.close()
         
@@ -189,16 +196,17 @@ elif (strategy == "astr"): # strategia A*
 
         manhStats = stat()
 
-        manhStats.setTime(end-start)
+        manhStats.setTime((end-start)*1000)
         manhStats.setPath(path)
-        manhStats.setLenFound(len(path))
 
 
         # wypisujemy wynik
         if path is None:
             print("Brak rozwiązania")
+            manhStats.setLenFound("-1")
         else:
             print(path)
+            manhStats.setLenFound(len(path))
 
         print("A* Hamming statistics:\n")
         print(manhStats)
@@ -206,7 +214,7 @@ elif (strategy == "astr"): # strategia A*
 
         # zapisujemy wyniki do pliku
         fileStats = open(statsFile, "w")
-        fileStats.write("A* Hamming statistics:\n")
+        # fileStats.write("A* Hamming statistics:\n")
         fileStats.write(str(manhStats))
         fileStats.close()
 else:

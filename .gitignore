@@ -169,3 +169,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+
+# wygenerowane plansze i rozwiazania
+puzzle/
+puzzle_solved/

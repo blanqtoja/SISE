@@ -50,4 +50,4 @@ class stat:
         return self.path
     
     def __str__(self):
-        return "LenFound: " + str(self.lenFound) + "\nVisited: " + str(self.visited) + "\nProcessed: " + str(self.processed) + "\nMaxLevel: " + str(self.maxLevel) + "\nTime: " + str(self.time) + "\nPath: " + str(self.path)
+        return str(self.lenFound) + "\n" + str(self.visited) + "\n" + str(self.processed) + "\n" + str(self.maxLevel) + "\n" + str(round(self.time, 3))
