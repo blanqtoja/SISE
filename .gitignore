@@ -172,5 +172,5 @@ cython_debug/
 
 
 # wygenerowane plansze i rozwiazania
-puzzle/
-puzzle_solved/
+# puzzle/
+# puzzle_solved/
