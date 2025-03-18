@@ -29,19 +29,19 @@ for perm in permutations:
         result = subprocess.run(["python", "main.py", "dfs", perm, f"puzzle/{puzzle}", f"puzzle_solved/{puzzle}_dfs_{perm}_sol.txt", f"puzzle_solved/{puzzle}_dfs_{perm.lower()}_stats.txt"], capture_output=True, text=True)
         # print("Standard Output:", result.stdout)
         # print("Standard Error:", result.stderr)
-    print(perm)
+    # print(perm)
 
 print("a* hamm start")
 #dla strategii a* i kazdego pliku z puzzleFiles uruchamiamy algorytm a* z heurystyka hamminga
 for puzzle in puzzleFiles:
-    result = subprocess.run(["python", "main.py", "astar", "hamm", f"puzzle/{puzzle}", f"puzzle_solved/{puzzle}_astar_hamm_sol.txt", f"puzzle_solved/{puzzle}_astar_hamm_stats.txt"], capture_output=True, text=True)
+    result = subprocess.run(["python", "main.py", "astr", "hamm", f"puzzle/{puzzle}", f"puzzle_solved/{puzzle}_astar_hamm_sol.txt", f"puzzle_solved/{puzzle}_astar_hamm_stats.txt"], capture_output=True, text=True)
     # print("Standard Output:", result.stdout)
     # print("Standard Error:", result.stderr)
 
 print("a* manh start")
 #dla strategii a* i kazdego pliku z puzzleFiles uruchamiamy algorytm a* z heurystyka manhatan
 for puzzle in puzzleFiles:
-    result = subprocess.run(["python", "main.py", "astar", "manh", f"puzzle/{puzzle}", f"puzzle_solved/{puzzle}_astar_manh_sol.txt", f"puzzle_solved/{puzzle}_astar_manh_stats.txt"], capture_output=True, text=True)
+    result = subprocess.run(["python", "main.py", "astr", "manh", f"puzzle/{puzzle}", f"puzzle_solved/{puzzle}_astar_manh_sol.txt", f"puzzle_solved/{puzzle}_astar_manh_stats.txt"], capture_output=True, text=True)
     # print("Standard Output:", result.stdout)
     # print("Standard Error:", result.stderr)
 

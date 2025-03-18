@@ -13,6 +13,7 @@ from stats import stat
 from BoardNode import BoardNode
 from bfs import bfs
 from dfs import dfs
+from fieldSwitch import findZeroField
 import time
 import sys
 
@@ -61,7 +62,8 @@ print(board)
 
 # 
 # tworzymy węzeł początkowy
-startNode = BoardNode(board, None, "")
+xZero, yZero = findZeroField(board)
+startNode = BoardNode(board, None, "", xZero, yZero)
 
 
 # strategia BFS
@@ -113,7 +115,7 @@ if(strategy == "bfs" or strategy == "dfs"):
 
         end = time.time()
 
-        dfsStats = stat()
+        # dfsStats = stat()
 
         dfsStats.setTime((end-start)*1000)
         dfsStats.setPath(path)
@@ -155,7 +157,7 @@ elif (strategy == "astr"): # strategia A*
 
         end = time.time()
 
-        hammStats = stat()
+        # hammStats = stat()
 
         hammStats.setTime((end-start)*1000)
         hammStats.setPath(path)
@@ -194,7 +196,7 @@ elif (strategy == "astr"): # strategia A*
 
         end = time.time()
 
-        manhStats = stat()
+        # manhStats = stat()
 
         manhStats.setTime((end-start)*1000)
         manhStats.setPath(path)

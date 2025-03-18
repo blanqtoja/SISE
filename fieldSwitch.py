@@ -23,13 +23,17 @@ def switchField(board, direction):
     if(direction == "L"):
         if(y > 0):
             board[x][y], board[x][y-1] = board[x][y-1], board[x][y] # zamieniamy puste pole z polem obok
+            return x, y-1
     elif(direction == "R"):
         if(y < col-1):
             board[x][y], board[x][y+1] = board[x][y+1], board[x][y]
+            return x, y+1
     elif(direction == "U"):
         if(x >0):
             board[x][y], board[x-1][y] = board[x-1][y], board[x][y]
+            return x-1, y
     elif(direction == "D"):
         if(x < row-1):
             board[x][y], board[x+1][y] = board[x+1][y], board[x][y]
+            return x+1, y
     

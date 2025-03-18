@@ -9,13 +9,15 @@ class BoardNode:
     parent = None # rodzic w drzewie
     direction = "" # kierunek w jakim przesunieto pusty punkt
     level = 0 # poziom w drzewie
+    xZero = 0
+    yZero = 0
 
     # konstruktor 
     # parametry:
     #   board - plansza 2D, stan układanki
     #   parent - BoardNode, rodzic w drzewie
     #   direction - string, kierunek w jakim przesunieto pusty punkt (potrzebne do optymalizacji)
-    def __init__(self, board, parent, direction): 
+    def __init__(self, board, parent, direction, xZero, yZero): 
         self.board = board
         self.parent = parent
         self.direction = direction
@@ -23,6 +25,16 @@ class BoardNode:
             self.level = parent.getLevel() + 1
         else:
             self.level = 0
+        
+        self.xZero = xZero
+        self.yZero = yZero
+
+    # funkcja zwracająca współrzędne pustego pola
+    # zwraca:
+    #   int, współrzędna x
+    #   int, współrzędna y
+    def getZeroField(self):
+        return self.xZero, self.yZero
 
     # funkcja zwracająca poziom w drzewie
     # zwraca:
@@ -48,8 +60,8 @@ class BoardNode:
         # if(fs.switchField(convertMatrix.to2D(newBoard, col), newDirection) == False): # przesuwamy puste pole
         #     return None # jesli nie udało się przesunąć pola, to zwracamy None
 
-        fs.switchField(newBoard, newDirection)
-        return BoardNode(newBoard, self, newDirection)
+        newXZero, newYzero = fs.switchField(newBoard, newDirection)
+        return BoardNode(newBoard, self, newDirection, newXZero, newYzero)
         
     
     # funkcja zwracająca rodzica węzła
