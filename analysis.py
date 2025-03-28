@@ -16,17 +16,17 @@ permutations = ["RDUL", "RDLU", "DRUL", "DRLU", "LUDR", "LURD", "ULDR", "ULRD"]
 
 print("bfs start")
 #dla kazdej permutacji i kazdego pliku z puzzleFiles uruchamiamy algorytm bfs
-for perm in permutations:
-    for puzzle in puzzleFiles:
-        result = subprocess.run(["python", "main.py", "bfs", perm, f"puzzle/{puzzle}", f"puzzle_solved/{puzzle}_bfs_{perm}_sol.txt", f"puzzle_solved/{puzzle}_bfs_{perm.lower()}_stats.txt"], capture_output=True, text=True)
+# for perm in permutations:
+#     for puzzle in puzzleFiles:
+#         result = subprocess.run(["python", "main.py", "bfs", perm, f"puzzle/{puzzle}", f"puzzle_solved/{puzzle}_bfs_{perm}_sol.txt", f"puzzle_solved/{puzzle}_bfs_{perm.lower()}_stats.txt"], capture_output=True, text=True)
         # print("Standard Output:", result.stdout)
         # print("Standard Error:", result.stderr)
 
 print("dfs start")
 #dla kazdej permutacji i kazdego pliku z puzzleFiles uruchamiamy algorytm dfs
-for perm in permutations:
-    for puzzle in puzzleFiles:
-        result = subprocess.run(["python", "main.py", "dfs", perm, f"puzzle/{puzzle}", f"puzzle_solved/{puzzle}_dfs_{perm}_sol.txt", f"puzzle_solved/{puzzle}_dfs_{perm.lower()}_stats.txt"], capture_output=True, text=True)
+# for perm in permutations:
+#     for puzzle in puzzleFiles:
+#         result = subprocess.run(["python", "main.py", "dfs", perm, f"puzzle/{puzzle}", f"puzzle_solved/{puzzle}_dfs_{perm}_sol.txt", f"puzzle_solved/{puzzle}_dfs_{perm.lower()}_stats.txt"], capture_output=True, text=True)
         # print("Standard Output:", result.stdout)
         # print("Standard Error:", result.stderr)
     # print(perm)
@@ -46,3 +46,4 @@ for puzzle in puzzleFiles:
     # print("Standard Error:", result.stderr)
 
 print("all done")
+# subprocess.run(["python", "main.py", "dfs", "DRUL", f"data.txt", f"puzzle_solved/data_sol.txt", f"puzzle_solved/data_stats.txt"], capture_output=True, text=True)

@@ -40,26 +40,33 @@ def cost(node, heurystyka):
 # podejmowanie decyzji o rozwoju węzła w algorytmie a*
 def aStar(startNode, k, dirPermutation, maxLevel, stats, heurystyka):
         
+    #set do przechowywania odwiedzonych plansz (nie wezlow, bo one moga sie różnić kierunkiem)
+    visited = set()
+    processed = set()
+
     stats.setMaxLevel(0)
 
     counter = itertools.count()  # licznik dla każdego węzła (eliminuje przypadek gdy dwa węzły mają taki sam priorytet)
 
     #tworzymy kopiec priorytetowy
+    #kopiec jest szybszy od kolejki priorytetowaj
+    #kolejka priorytetowa jest zaimplementowana na kopcu binarnym
     heapq = []
 
     #dodajemy wezel startowy do kopca -> (koszt, wezel)
     #koszt = heurystyka + ilosc ruchow od startu
+    #przy wyciaganiu elementow z kopca, wybierane sa elementy wzgledem kosztu, a jesli koszt jest taki sam, to wzgledem licznika, nastepnie po wezle (nie dojdzie do tego bo licznik sie rozni zawsze)
     heappush(heapq, (cost(startNode, heurystyka), next(counter), startNode))
+    visited.add(tuple(map(tuple, currentNode.getBoard()))) #dodajemy plansze jjako odwiedzona
+    #krotka, bo lista nie jest hashowalna, a krotka jest
 
 
-    #set do przechowywania odwiedzonych plansz (nie wezlow, bo one moga sie różnić kierunkiem)
-    visited = set()
-
+    
 
     while(heapq): #dopoki w kolejce sa wezly
+
+        #riorytet jest określany przez pierwszy element krotki, a kolejne elementy są używane jako tiebreakery, jeśli pierwszy element jest taki sam
         _, _, currentNode = heappop(heapq) #pobieramy wezel z kolejki
-        visited.add(tuple(map(tuple, currentNode.getBoard()))) #dodajemy plansze jako krotkę do zbioru odwiedzonych
-        #krotka, bo lista nie jest hashowalna, a krotka jest
 
         #sprawdzamy czy nie przekroczylismy maksymalnej glebokosci
         # print(currentNode.getLevel())
@@ -68,6 +75,8 @@ def aStar(startNode, k, dirPermutation, maxLevel, stats, heurystyka):
 
 
         #sprawdzamyczy to jest rozwiazanie
+        processed.add(tuple(map(tuple, currentNode.getBoard()))) #dodajemy plansze jjako przetworzona
+        #krotka, bo lista nie jest hashowalna, a krotka jest
         if currentNode.isSolution():
             stats.setVisited(len(visited))
             stats.setProcessed(len(visited))
@@ -110,14 +119,18 @@ def aStar(startNode, k, dirPermutation, maxLevel, stats, heurystyka):
     
             newNode = currentNode.addNode(direction, k)
             if(tuple(map(tuple, newNode.getBoard())) not in visited): # jesli plansza nie byla odwiedzona to dodajemy ja do kolejki
+                
                 heappush(heapq, (cost(newNode, heurystyka), next(counter), newNode))
-                if newNode.isSolution():
-                    stats.setVisited(len(visited))
-                    stats.setProcessed(len(visited))
-                    return newNode.getStringPath()
+                visited.add(tuple(map(tuple, currentNode.getBoard()))) #dodajemy plansze jjako odwiedzona
+                # processed.add(tuple(map(tuple, currentNode.getBoard()))) #dodajemy plansze jjako przetworzona
+
+                # if newNode.isSolution():
+                #     stats.setVisited(len(visited))
+                #     stats.setProcessed(len(visited))
+                #     return newNode.getStringPath()
 
     stats.setVisited(len(visited))
-    stats.setProcessed(len(visited))
+    stats.setProcessed(len(processed))
 
     return None # nie znaleziono rozwiazania
 

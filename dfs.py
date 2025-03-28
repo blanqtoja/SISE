@@ -3,6 +3,10 @@ import fieldSwitch as fs
 import convertMatrix
 
 def dfs(startNode, k, dirPermutation, maxLevel, stats):
+    
+    #set do przechowywania odwiedzonych plansz (nie wezlow, bo one moga sie różnić kierunkiem)
+    visited = set()
+    processed = set()
 
     stats.setMaxLevel(0)
 
@@ -10,9 +14,8 @@ def dfs(startNode, k, dirPermutation, maxLevel, stats):
     stack = []
 
     stack.append(startNode) #dodajemy wezel startowy do kolejki
+    visited.add(tuple(map(tuple, currentNode.getBoard()))) #dodajemy plansze jako krotkę do zbioru odwiedzonych
 
-    #set do przechowywania odwiedzonych plansz (nie wezlow, bo one moga sie różnić kierunkiem)
-    visited = set()
 
     while(stack): #dopoki w kolejce sa wezly
         currentNode = stack.pop() #pobieramy wezel z kolejki
@@ -25,6 +28,7 @@ def dfs(startNode, k, dirPermutation, maxLevel, stats):
 
 
         #sprawdzamyczy to jest rozwiazanie
+        processed.add(tuple(map(tuple, currentNode.getBoard()))) #dodajemy plansze jako krotkę do zbioru odwiedzonych
         if currentNode.isSolution():
             stats.setVisited(len(visited))
             stats.setProcessed(len(visited))
@@ -52,8 +56,9 @@ def dfs(startNode, k, dirPermutation, maxLevel, stats):
             # jesli puste pole jest na skraju to nie mozemy go przesunac w tym kierunku
             
             # row, col = fs.findZeroField(currentNode.getBoard()) 
+            # row, col = currentNode.getZeroField()
             row, col = currentNode.getZeroField()
-            
+
             #sprawdzamy czy puste pole jest na skraju i czy chcemy je przesunac w tym kierunku
             if(row == 0 and direction == "U"):
                 continue
@@ -67,10 +72,12 @@ def dfs(startNode, k, dirPermutation, maxLevel, stats):
             newNode = currentNode.addNode(direction, k)
             if(tuple(map(tuple, newNode.getBoard())) not in visited): # jesli plansza nie byla odwiedzona to dodajemy ja do kolejki
                 stack.append(newNode)
-                if newNode.isSolution():
-                    stats.setVisited(len(visited))
-                    stats.setProcessed(len(visited))
-                    return newNode.getStringPath()
+                visited.add(tuple(map(tuple, currentNode.getBoard()))) #dodajemy plansze jako krotkę do zbioru odwiedzonych
+
+                # if newNode.isSolution():
+                #     stats.setVisited(len(visited))
+                #     stats.setProcessed(len(visited))
+                #     return newNode.getStringPath()
 
     stats.setVisited(len(visited))
     stats.setProcessed(len(visited))

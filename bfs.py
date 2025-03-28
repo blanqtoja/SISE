@@ -55,7 +55,8 @@ def bfs(startNode, k, dirPermutation, maxLevel, stats):
             
             # jesli puste pole jest na skraju to nie mozemy go przesunac w tym kierunku
             
-            row, col = fs.findZeroField(currentNode.getBoard()) 
+            # row, col = fs.findZeroField(currentNode.getBoard()) 
+            row, col = currentNode.getZeroField()
             
             #sprawdzamy czy puste pole jest na skraju i czy chcemy je przesunac w tym kierunku
             if(row == 0 and direction == "U"):
