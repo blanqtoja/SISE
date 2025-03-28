@@ -5,15 +5,18 @@ import convertMatrix
 
 def bfs(startNode, k, dirPermutation, maxLevel, stats):
     
+    #set do przechowywania odwiedzonych plansz (nie wezlow, bo one moga sie różnić kierunkiem)
+    visited = set()
+    processed = set()
+
     stats.setMaxLevel(0)
 
     #kolejka fifo do przechowywania wezlow po szerokosci
     queue = deque()
 
     queue.append(startNode) #dodajemy wezel startowy do kolejki
-
-    #set do przechowywania odwiedzonych plansz (nie wezlow, bo one moga sie różnić kierunkiem)
-    visited = set()
+    visited.add(tuple(map(tuple, currentNode.getBoard()))) #dodajemy plansze jako krotkę do zbioru odwiedzonych
+    
 
     while(queue): #dopoki w kolejce sa wezly
         currentNode = queue.popleft() #pobieramy wezel z kolejki
@@ -27,6 +30,7 @@ def bfs(startNode, k, dirPermutation, maxLevel, stats):
 
 
         #sprawdzamyczy to jest rozwiazanie
+        processed.add(tuple(map(tuple, currentNode.getBoard()))) #dodajemy plansze jjako przetworzona
         if currentNode.isSolution():
             stats.setVisited(len(visited))
             stats.setProcessed(len(visited))
@@ -71,10 +75,12 @@ def bfs(startNode, k, dirPermutation, maxLevel, stats):
             newNode = currentNode.addNode(direction, k)
             if(tuple(map(tuple, newNode.getBoard())) not in visited): # jesli plansza nie byla odwiedzona to dodajemy ja do kolejki
                 queue.append(newNode)
-                if newNode.isSolution():
-                    stats.setVisited(len(visited))
-                    stats.setProcessed(len(visited))
-                    return newNode.getStringPath()
+                visited.add(tuple(map(tuple, currentNode.getBoard()))) #dodajemy plansze jako krotkę do zbioru odwiedzonych
+
+                # if newNode.isSolution():
+                #     stats.setVisited(len(visited))
+                #     stats.setProcessed(len(visited))
+                #     return newNode.getStringPath()
 
     stats.setVisited(len(visited))
     stats.setProcessed(len(visited))
