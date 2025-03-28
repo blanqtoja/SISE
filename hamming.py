@@ -57,7 +57,7 @@ def aStar(startNode, k, dirPermutation, maxLevel, stats, heurystyka):
     #koszt = heurystyka + ilosc ruchow od startu
     #przy wyciaganiu elementow z kopca, wybierane sa elementy wzgledem kosztu, a jesli koszt jest taki sam, to wzgledem licznika, nastepnie po wezle (nie dojdzie do tego bo licznik sie rozni zawsze)
     heappush(heapq, (cost(startNode, heurystyka), next(counter), startNode))
-    visited.add(tuple(map(tuple, currentNode.getBoard()))) #dodajemy plansze jjako odwiedzona
+    visited.add(tuple(map(tuple, startNode.getBoard()))) #dodajemy plansze jjako odwiedzona
     #krotka, bo lista nie jest hashowalna, a krotka jest
 
 

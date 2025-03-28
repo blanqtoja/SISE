@@ -15,7 +15,7 @@ def bfs(startNode, k, dirPermutation, maxLevel, stats):
     queue = deque()
 
     queue.append(startNode) #dodajemy wezel startowy do kolejki
-    visited.add(tuple(map(tuple, currentNode.getBoard()))) #dodajemy plansze jako krotkę do zbioru odwiedzonych
+    visited.add(tuple(map(tuple, startNode.getBoard()))) #dodajemy plansze jako krotkę do zbioru odwiedzonych
     
 
     while(queue): #dopoki w kolejce sa wezly

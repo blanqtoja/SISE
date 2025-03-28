@@ -48,6 +48,7 @@ for i in range(1, w+1): #liczby mamy podane dopiero w drugim wierszu
 
 # zamykamy plik
 fileOrginal.close()
+solvedBoardFile = open(solvedBoardFile, "w")
 
 print(board)
 
@@ -85,14 +86,18 @@ if(strategy == "bfs" or strategy == "dfs"):
         bfsStats.setTime((end-start)*1000)
         bfsStats.setPath(path)
 
+
         # wypisujemy wynik
         if path is None:
             print("Brak rozwiązania")
             bfsStats.setLenFound("-1")
+            solvedBoardFile.write("-1")
 
         else:
             print(path)
             bfsStats.setLenFound(len(path))
+            solvedBoardFile.write(path)
+
 
 
         print("BFS statistics:\n")
@@ -125,10 +130,12 @@ if(strategy == "bfs" or strategy == "dfs"):
         if path is None:
             print("Brak rozwiązania")
             dfsStats.setLenFound("-1")
+            solvedBoardFile.write("-1")
 
         else:
             print(path)
             dfsStats.setLenFound(len(path))
+            solvedBoardFile.write(path)
 
         # print("DFS statistics:\n")
         print(dfsStats)
@@ -167,9 +174,13 @@ elif (strategy == "astr"): # strategia A*
         if path is None:
             print("Brak rozwiązania")
             hammStats.setLenFound("-1")
+            solvedBoardFile.write("-1")
+
         else:
             print(path)
             hammStats.setLenFound(len(path))
+            solvedBoardFile.write(path)
+
 
 
         print("A* Hamming statistics:\n")
@@ -206,9 +217,13 @@ elif (strategy == "astr"): # strategia A*
         if path is None:
             print("Brak rozwiązania")
             manhStats.setLenFound("-1")
+            solvedBoardFile.write("-1")
+
         else:
             print(path)
             manhStats.setLenFound(len(path))
+            solvedBoardFile.write(path)
+
 
         print("A* Hamming statistics:\n")
         print(manhStats)
@@ -222,3 +237,4 @@ elif (strategy == "astr"): # strategia A*
 else:
     print("Nieznana strategia")
 
+solvedBoardFile.close()
