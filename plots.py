@@ -6,6 +6,8 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
+import generate_plot as gp
+
 # Jeśli nie ma folderu puzzle_solved, zakończ program
 if not os.path.exists("puzzle_solved"):
     print("Brak folderu puzzle_solved")
@@ -354,86 +356,92 @@ x_labels = np.array([1, 2, 3, 4, 5, 6, 7])
 
 
 
-# Zakładam, że klucze w słownikach to numery odpowiadające głębokości rozwiązania
-depth_levels = [1, 2, 3, 4, 5, 6, 7]  # Głębokości, które występują w danych
+# # Zakładam, że klucze w słownikach to numery odpowiadające głębokości rozwiązania
+# depth_levels = [1, 2, 3, 4, 5, 6, 7]  # Głębokości, które występują w danych
 
-# Listy wartości i grup w odpowiedniej kolejności
-values = []
-groups = []
-categories = []
+# # Listy wartości i grup w odpowiedniej kolejności
+# values = []
+# groups = []
+# categories = []
 
-for depth in depth_levels:
-    values.extend([all_avg_len_bfs[depth], all_avg_len_dfs[depth], all_avg_len_astr[depth]])
-    groups.extend(["BFS", "DFS", "A*"])
-    categories.extend([depth] * 3)  # Powielamy głębokość 3 razy
+# for depth in depth_levels:
+#     values.extend([all_avg_len_bfs[depth], all_avg_len_dfs[depth], all_avg_len_astr[depth]])
+#     groups.extend(["BFS", "DFS", "A*"])
+#     categories.extend([depth] * 3)  # Powielamy głębokość 3 razy
 
-# Tworzenie DataFrame
-df = pd.DataFrame({
-    "Kategoria": categories,  
-    "Wartość": values,
-    "Grupa": groups  
-})
-
-
-
-# Wykres
-plt.figure(figsize=(8, 5))
-sns.barplot(data=df, x="Kategoria", y="Wartość", hue="Grupa", dodge=True)
-
-# Opisy
-plt.title("Średnia długość rozwiązania")
-plt.xlabel("Kategoria")
-plt.ylabel("Wartość")
-plt.legend(title="Grupa")
-
-plt.show()
+# # Tworzenie DataFrame
+# df = pd.DataFrame({
+#     "Kategoria": categories,  
+#     "Wartość": values,
+#     "Grupa": groups  
+# })
 
 
+
+# # Wykres
+# plt.figure(figsize=(8, 5))
+# sns.barplot(data=df, x="Kategoria", y="Wartość", hue="Grupa", dodge=True)
+
+# # Opisy
+# plt.title("Średnia długość rozwiązania")
+# plt.xlabel("Kategoria")
+# plt.ylabel("Wartość")
+# plt.legend(title="Grupa")
+
+# plt.show()
 
 
 
 
 
+# def plot_permutations(arr, title, xlabel, ylabel):
+    
+#     # Tworzenie DataFrame w formacie długim
+#     data = []
+#     for depth, moves in arr.items():
+#         for move, value in moves.items():
+#             data.append([depth, value, move])
 
-# Tworzenie DataFrame w formacie długim
-data = []
-for depth, moves in avg_len_bfs.items():
-    for move, value in moves.items():
-        data.append([depth, value, move])
+#     df = pd.DataFrame(data, columns=["Głębokość", "Średnia długość rozwiązania", "Permutacja ruchów"])
 
-df = pd.DataFrame(data, columns=["Głębokość", "Średnia długość rozwiązania", "Permutacja ruchów"])
+#     # Wykres
+#     plt.figure(figsize=(10, 6))
+#     sns.barplot(data=df, x="Głębokość", y="Średnia długość rozwiązania", hue="Permutacja ruchów", dodge=True)
 
-# Wykres
-plt.figure(figsize=(10, 6))
-sns.barplot(data=df, x="Głębokość", y="Średnia długość rozwiązania", hue="Permutacja ruchów", dodge=True)
+#     # Opisy
+#     plt.title(title)
+#     plt.xlabel(xlabel)
+#     plt.ylabel(ylabel)
+#     plt.legend(title="Permutacja ruchów")
 
-# Opisy
-plt.title("Średnia długość rozwiązania dla BFS")
-plt.xlabel("Głębokość rozwiązania")
-plt.ylabel("Średnia długość rozwiązania")
-plt.legend(title="Permutacja ruchów")
+#     # Pokazanie wykresu
+#     plt.show()
 
-# Pokazanie wykresu
-plt.show()
+gp.plot_all_strategies(all_avg_len_bfs, all_avg_len_dfs, all_avg_len_astr, "Średnia długość rozwiązania", "Głębokość", "Średnia długość rozwiązania")
+gp.plot_permutations(avg_len_bfs, "Średnia długość rozwiązania dla BFS", "Głębokość rozwiązania", "Średnia długość rozwiązania")
+gp.plot_permutations(avg_len_dfs, "Średnia długość rozwiązania dla DFS", "Głębokość rozwiązania", "Średnia długość rozwiązania")
+gp.plot_permutations(avg_len_astr, "Średnia długość rozwiązania dla A*", "Głębokość rozwiązania", "Średnia długość rozwiązania")
 
 
-# Tworzenie DataFrame w formacie długim
-data = []
-for depth, moves in avg_len_dfs.items():
-    for move, value in moves.items():
-        data.append([depth, value, move])
+gp.plot_all_strategies(all_avg_states_bfs, all_avg_states_dfs, all_avg_states_astr, "Średnia liczba odwiedzonych stanów dla wszystkich strategii", "Głębokość rozwiązania", "Średnia liczba odwiedzonych stanów")
+gp.plot_permutations(avg_states_bfs, "Średnia liczba odwiedzonych stanów dla BFS", "Głębokość rozwiązania", "Średnia liczba odwiedzonych stanów")
+gp.plot_permutations(avg_states_dfs, "Średnia liczba odwiedzonych stanów dla DFS", "Głębokość rozwiązania", "Średnia liczba odwiedzonych stanów")
+gp.plot_permutations(avg_states_astr, "Średnia liczba odwiedzonych stanów dla A*", "Głębokość rozwiązania", "Średnia liczba odwiedzonych stanów")
 
-df = pd.DataFrame(data, columns=["Głębokość", "Średnia długość rozwiązania", "Permutacja ruchów"])
 
-# Wykres
-plt.figure(figsize=(10, 6))
-sns.barplot(data=df, x="Głębokość", y="Średnia długość rozwiązania", hue="Permutacja ruchów", dodge=True)
+gp.plot_all_strategies(all_avg_proc_bfs, all_avg_proc_dfs, all_avg_proc_astr)
+gp.plot_permutations(avg_proc_bfs, "Średnia liczba przeprocesowanych stanów dla BFS", "Głębokość rozwiązania", "Średnia liczba przeprocesowanych stanów")
+gp.plot_permutations(avg_proc_dfs, "Średnia liczba przeprocesowanych stanów dla DFS", "Głębokość rozwiązania", "Średnia liczba przeprocesowanych stanów")
+gp.plot_permutations(avg_proc_astr, "Średnia liczba przeprocesowanych stanów dla A*", "Głębokość rozwiązania", "Średnia liczba przeprocesowanych stanów")
 
-# Opisy
-plt.title("Średnia długość rozwiązania dla DFS")
-plt.xlabel("Głębokość rozwiązania")
-plt.ylabel("Średnia długość rozwiązania")
-plt.legend(title="Permutacja ruchów")
 
-# Pokazanie wykresu
-plt.show()
+gp.plot_all_strategies(all_avg_max_depth_bfs, all_avg_max_depth_dfs, all_avg_max_depth_astr)
+gp.plot_permutations(avg_max_depth_bfs, "Średnia maksymalna rekursja dla BFS", "Głębokość rozwiązania", "Średnia maksymalna rekursja")
+gp.plot_permutations(avg_max_depth_dfs, "Średnia maksymalna rekursja dla DFS", "Głębokość rozwiązania", "Średnia maksymalna rekursja")
+gp.plot_permutations(avg_max_depth_astr, "Średnia maksymalna rekursja dla A*", "Głębokość rozwiązania", "Średnia maksymalna rekursja")
+
+
+gp.plot_all_strategies(all_avg_time_bfs, all_avg_time_dfs, all_avg_time_astr)
+gp.plot_permutations(avg_time_bfs, "Średni czas przetwarzania dla BFS", "Głębokość rozwiązania", "Średni czas przetwarzania")
+gp.plot_permutations(avg_time_dfs, "Średni czas przetwarzania dla DFS", "Głębokość rozwiązania", "Średni czas przetwarzania")
+gp.plot_permutations(avg_time_astr, "Średni czas przetwarzania dla A*", "Głębokość rozwiązania", "Średni czas przetwarzania")
