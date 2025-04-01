@@ -3,7 +3,7 @@ import seaborn as sns
 import pandas as pd
 import numpy as np
 
-def plot_all_strategies(all_bfs, all_dfs, all_astr, title, xlabel, ylabel):
+def plot_all_strategies(all_bfs, all_dfs, all_astr, title, xlabel, ylabel, log=False):
     # Zakładam, że klucze w słownikach to numery odpowiadające głębokości rozwiązania
     depth_levels = [1, 2, 3, 4, 5, 6, 7]  # Głębokości, które występują w danych
 
@@ -30,6 +30,9 @@ def plot_all_strategies(all_bfs, all_dfs, all_astr, title, xlabel, ylabel):
     plt.figure(figsize=(8, 5))
     sns.barplot(data=df, x="Kategoria", y="Wartość", hue="Grupa", dodge=True)
 
+    if(log):
+        plt.yscale('log')
+        
     # Opisy
     plt.title(title)
     plt.xlabel(xlabel)
