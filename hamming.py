@@ -6,14 +6,15 @@ import fieldSwitch as fs
 from BoardNode import BoardNode
 from stats import stat
 
-
 def hamming(board):
     cnt = 0
 
     for i in range(len(board)):
         for j in range(len(board[i])):
-            if(i == len(board)-1 and j == len(board[i])-1):
-                break
+            if board[i][j] == 0: # nie sprawdzamy zera
+                continue
+            # if(i == len(board)-1 and j == len(board[i])-1):
+            #     break
             if board[i][j] != i*len(board) + j + 1:
                 cnt += 1
 
@@ -26,6 +27,8 @@ def manhattan(board):
     #potrzebujemy x y gdzie powinno byc dane pole 
     for i in range(len(board)):
         for j in range(len(board[i])):
+            if board[i][j] == 0: # nie sprawdzamy zera
+                continue
             x = board[i][j] // len(board) -1 # gdzie powinno byc dane pole
             y = board[i][j] % len(board) -1
             cnt += abs(x-i) + abs(y-j)
