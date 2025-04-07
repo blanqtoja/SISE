@@ -10,15 +10,15 @@ def dfs(startNode, k, dirPermutation, maxLevel, stats):
 
     stats.setMaxLevel(0)
 
-    #kolejka fif do przechowywania wezlow po szerokosci
+    # lifo do przechowywania wezlow po szerokosci
     stack = []
 
-    stack.append(startNode) #dodajemy wezel startowy do kolejki
+    stack.append(startNode) #dodajemy wezel startowy do lifo
     visited.add(tuple(map(tuple, startNode.getBoard()))) #dodajemy plansze jako krotkę do zbioru odwiedzonych
 
 
     while(stack): #dopoki w kolejce sa wezly
-        currentNode = stack.pop() #pobieramy wezel z kolejki
+        currentNode = stack.pop() #pobieramy wezel z lifo
         visited.add(tuple(map(tuple, currentNode.getBoard()))) #dodajemy plansze jako krotkę do zbioru odwiedzonych
         #krotka, bo lista nie jest hashowalna, a krotka jest
 
@@ -31,7 +31,7 @@ def dfs(startNode, k, dirPermutation, maxLevel, stats):
         processed.add(tuple(map(tuple, currentNode.getBoard()))) #dodajemy plansze jako krotkę do zbioru odwiedzonych
         if currentNode.isSolution():
             stats.setVisited(len(visited))
-            stats.setProcessed(len(visited))
+            stats.setProcessed(len(processed))
             return currentNode.getStringPath()
         
         #sprawdzamy czy nie przekroczylismy maksymalnej glebokosci
@@ -80,5 +80,5 @@ def dfs(startNode, k, dirPermutation, maxLevel, stats):
                 #     return newNode.getStringPath()
 
     stats.setVisited(len(visited))
-    stats.setProcessed(len(visited))
+    stats.setProcessed(len(processed))
     return None # nie znaleziono rozwiazania

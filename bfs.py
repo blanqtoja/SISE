@@ -20,10 +20,9 @@ def bfs(startNode, k, dirPermutation, maxLevel, stats):
 
     while(queue): #dopoki w kolejce sa wezly
         currentNode = queue.popleft() #pobieramy wezel z kolejki
-        visited.add(tuple(map(tuple, currentNode.getBoard()))) #dodajemy plansze jako krotkę do zbioru odwiedzonych
+        # visited.add(tuple(map(tuple, currentNode.getBoard()))) #dodajemy plansze jako krotkę do zbioru odwiedzonych
         #krotka, bo lista nie jest hashowalna, a krotka jest
 
-        #sprawdzamy czy nie przekroczylismy maksymalnej glebokosci
         # print(currentNode.getLevel())
         if(currentNode.getLevel() > stats.getMaxLevel()):
             stats.setMaxLevel(currentNode.getLevel())
@@ -33,13 +32,13 @@ def bfs(startNode, k, dirPermutation, maxLevel, stats):
         processed.add(tuple(map(tuple, currentNode.getBoard()))) #dodajemy plansze jjako przetworzona
         if currentNode.isSolution():
             stats.setVisited(len(visited))
-            stats.setProcessed(len(visited))
+            stats.setProcessed(len(processed))
             return currentNode.getStringPath()
         
 
         if(currentNode.getLevel() == maxLevel):
             stats.setVisited(len(visited))
-            stats.setProcessed(len(visited))
+            stats.setProcessed(len(processed))
             return None
         
         #dla kazdego ruchu tworzymy nowy wezel
@@ -83,6 +82,6 @@ def bfs(startNode, k, dirPermutation, maxLevel, stats):
                 #     return newNode.getStringPath()
 
     stats.setVisited(len(visited))
-    stats.setProcessed(len(visited))
+    stats.setProcessed(len(processed))
 
     return None # nie znaleziono rozwiazania

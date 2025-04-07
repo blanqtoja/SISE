@@ -27,10 +27,11 @@ def manhattan(board):
     #potrzebujemy x y gdzie powinno byc dane pole 
     for i in range(len(board)):
         for j in range(len(board[i])):
-            if board[i][j] == 0: # nie sprawdzamy zera
+            val = board[i][j]
+            if val == 0: # nie sprawdzamy zera
                 continue
-            x = board[i][j] // len(board) -1 # gdzie powinno byc dane pole
-            y = board[i][j] % len(board) -1
+            x = (val-1) // len(board)  # gdzie powinno byc dane pole
+            y = (val-1) % len(board)
             cnt += abs(x-i) + abs(y-j)
     
     return cnt
@@ -82,13 +83,13 @@ def aStar(startNode, k, dirPermutation, maxLevel, stats, heurystyka):
         #krotka, bo lista nie jest hashowalna, a krotka jest
         if currentNode.isSolution():
             stats.setVisited(len(visited))
-            stats.setProcessed(len(visited))
+            stats.setProcessed(len(processed))
             return currentNode.getStringPath()
         
 
         if(currentNode.getLevel() == maxLevel):
             stats.setVisited(len(visited))
-            stats.setProcessed(len(visited))
+            stats.setProcessed(len(processed))
             return None
         
         #dla kazdego ruchu tworzymy nowy wezel
